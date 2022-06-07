@@ -6,10 +6,17 @@ plugins {
     id("net.mamoe.mirai-console") version "2.10.0"
 }
 
-group = "org.example"
+group = "org.echoosx"
 version = "0.1.0"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public") // 阿里云国内代理仓库
     mavenCentral()
+}
+
+dependencies{
+    implementation("com.vladsch.flexmark:flexmark:0.64.0")
+    implementation("com.vladsch.flexmark:flexmark-util:0.64.0")
+    implementation("com.vladsch.flexmark:flexmark-ext-tables:0.64.0")
+    testImplementation(kotlin("test"))
 }
