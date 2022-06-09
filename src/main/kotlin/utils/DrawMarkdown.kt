@@ -4,7 +4,9 @@ import com.assertthat.selenium_shutterbug.core.Capture
 import com.assertthat.selenium_shutterbug.core.Shutterbug
 import md2img.MarkDown2HtmlWrapper
 import org.echoosx.mirai.plugin.MarkdownToImage.dataFolderPath
+import org.echoosx.mirai.plugin.MiraiSeleniumConfig
 import org.openqa.selenium.By
+import org.openqa.selenium.Dimension
 import xyz.cssxsh.mirai.selenium.MiraiSeleniumPlugin
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -48,7 +50,7 @@ class DrawMarkdown {
      * @param markdown md文本，String类型
      * @return 图片的InputStream类型
      */
-    fun markdown2Image(markdown:String):InputStream{
+    fun markdown2Image(markdown:String,height:Int = 1024):InputStream{
         val id = timestamp()
         val entity = MarkDown2HtmlWrapper.ofContent(markdown)
         if(this.customCss.isBlank())
@@ -60,11 +62,11 @@ class DrawMarkdown {
         fos.write(entity.toString().toByteArray())
         fos.close()
 
-        val driver = MiraiSeleniumPlugin.driver()
+        val driver = MiraiSeleniumPlugin.driver(config = MiraiSeleniumConfig)
         driver.get("file://${dataFolderPath}/html/${id}.html")
-        driver.manage().window().maximize()
-        val size = driver.findElement(By.cssSelector("body")).size
-        println(size)
+        val element = driver.findElement(By.cssSelector("body")).size
+        driver.manage().window().size = Dimension(element.width,element.height)
+
         Shutterbug.shootPage(driver, Capture.FULL, true).withName(id).save("${dataFolderPath}/image")
         driver.quit()
 
@@ -88,11 +90,10 @@ class DrawMarkdown {
         fos.write(entity.toString().toByteArray())
         fos.close()
 
-        val driver = MiraiSeleniumPlugin.driver()
+        val driver = MiraiSeleniumPlugin.driver(config = MiraiSeleniumConfig)
         driver.get("file://${dataFolderPath}/html/${id}.html")
-        driver.manage().window().maximize()
-        val size = driver.findElement(By.cssSelector("body")).size
-        println(size)
+        val element = driver.findElement(By.cssSelector("body")).size
+        driver.manage().window().size = Dimension(element.width,element.height)
 
         Shutterbug.shootPage(driver, Capture.FULL, true).withName(id).save("${dataFolderPath}/image")
         driver.quit()
@@ -101,7 +102,7 @@ class DrawMarkdown {
     }
 
     private fun timestamp():String{
-        val timecode = DateTimeFormatter.ofPattern("yyyymmddhhmmss").format(LocalDateTime.now())
+        val timecode = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now())
         val salt = createRandomStr(8)
         return "${timecode}_${salt}"
     }

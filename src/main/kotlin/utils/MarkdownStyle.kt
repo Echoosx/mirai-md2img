@@ -14,7 +14,8 @@ class MarkdownStyle{
               <title>Document</title>
               <style type="text/css">
                 body{
-                    margin:0
+                    margin:0;
+                    width:max-content;
                 }
                 .margin-tb-zero,
                 .markdown-body ol ol,
@@ -257,7 +258,8 @@ class MarkdownStyle{
               <title>Document</title>
               <style type="text/css">
                 body{
-                    margin:0
+                    margin:0;
+                    width:max-content;
                 }
                 .margin-tb-zero,
                 .markdown-body ol ol,
