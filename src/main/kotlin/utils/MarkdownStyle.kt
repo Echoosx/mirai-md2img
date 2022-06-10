@@ -158,9 +158,9 @@ class MarkdownStyle{
                   overflow: auto;
                   font-size: 85%;
                   line-height: 1.45;
-                  background-color: #f7f7f7;
-                  -webkit-border-radius: 3px;
-                  border-radius: 3px;
+                  background-color: #e8ebef;
+                  -webkit-border-radius: 5px;
+                  border-radius: 5px;
                 }
                 .markdown-body pre code {
                   display: inline;
@@ -173,8 +173,8 @@ class MarkdownStyle{
                   word-wrap: normal;
                   white-space: pre;
                   border: 0;
-                  -webkit-border-radius: 3px;
-                  border-radius: 3px;
+                  -webkit-border-radius: 5px;
+                  border-radius: 5px;
                   background-color: transparent;
                 }
                 .markdown-body pre code:before,
@@ -403,9 +403,9 @@ class MarkdownStyle{
                   overflow: auto;
                   font-size: 85%;
                   line-height: 1.45;
-                  background-color: #f7f7f7;
-                  -webkit-border-radius: 3px;
-                  border-radius: 3px;
+                  background-color: #3a3f4b;
+                  -webkit-border-radius: 5px;
+                  border-radius: 5px;
                 }
                 .markdown-body pre code {
                   display: inline;
@@ -418,8 +418,8 @@ class MarkdownStyle{
                   word-wrap: normal;
                   white-space: pre;
                   border: 0;
-                  -webkit-border-radius: 3px;
-                  border-radius: 3px;
+                  -webkit-border-radius: 5px;
+                  border-radius: 5px;
                   background-color: transparent;
                 }
                 .markdown-body pre code:before,

@@ -1,9 +1,16 @@
 package org.echoosx.mirai.plugin
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
+import net.mamoe.mirai.contact.Contact.Companion.sendImage
+import net.mamoe.mirai.event.globalEventChannel
+import net.mamoe.mirai.event.subscribeGroupMessages
+import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
 import net.mamoe.mirai.utils.info
 import net.mamoe.mirai.utils.warning
+import org.echoosx.mirai.plugin.utils.DrawMarkdown
 import org.echoosx.mirai.plugin.utils.touchDir
 import xyz.cssxsh.mirai.selenium.MiraiSeleniumPlugin
 
@@ -33,5 +40,18 @@ object MarkdownToImage : KotlinPlugin(
         touchDir("${dataFolderPath}/html")
         touchDir("${dataFolderPath}/image")
         if(selenium) { MiraiSeleniumConfig.reload() }
+        globalEventChannel().subscribeGroupMessages {
+            startsWith("md"){ str->
+                val drawer = DrawMarkdown()
+                drawer.setLight(false)
+                drawer.setWidth(800)
+                drawer.setFontsize(25)
+                val resource = drawer.markdown2Image(str).toExternalResource()
+                subject.sendImage(resource)
+                withContext(Dispatchers.IO) {
+                    resource.close()
+                }
+            }
+        }
     }
 }

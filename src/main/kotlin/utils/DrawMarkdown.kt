@@ -97,7 +97,6 @@ class DrawMarkdown {
         driver.get("file://${dataFolderPath}/html/${id}.html")
         val element = driver.findElement(By.className("markdown-body")).size
         driver.manage().window().size = Dimension(this.width?:element.width,element.height)
-        println(driver.manage().window().size)
 
         Shutterbug.shootPage(driver, Capture.FULL, true).withName(id).save("${dataFolderPath}/image")
         driver.quit()
