@@ -15,11 +15,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-@Suppress("duplicates","SpellCheckingInspection")
+@Suppress("unused","duplicates","SpellCheckingInspection")
 class DrawMarkdown {
-    private var customCss:String = ""
+    private var customCss:String? = null
     private var fontsize:Int = 20
     private var isLight:Boolean = true
+    private var width:Int? = null
 
     /**
      * 自定义css
@@ -46,17 +47,22 @@ class DrawMarkdown {
     }
 
     /**
+     * 自定义生成图片的宽度
+     * @param width 宽度，单位px
+     */
+    fun setWidth(width:Int){
+        this.width = width
+    }
+
+    /**
      * markdown转图片
      * @param markdown md文本，String类型
      * @return 图片的InputStream类型
      */
-    fun markdown2Image(markdown:String,height:Int = 1024):InputStream{
+    fun markdown2Image(markdown:String):InputStream{
         val id = timestamp()
         val entity = MarkDown2HtmlWrapper.ofContent(markdown)
-        if(this.customCss.isBlank())
-            entity.css = MarkdownStyle().getCss(this.fontsize,this.isLight)
-        else
-            entity.css = this.customCss
+        entity.css = this.customCss?:MarkdownStyle().getCss(this.fontsize,this.isLight)
         val fos = FileOutputStream("${dataFolderPath}/html/${id}.html", false)
 
         fos.write(entity.toString().toByteArray())
@@ -64,8 +70,8 @@ class DrawMarkdown {
 
         val driver = MiraiSeleniumPlugin.driver(config = MiraiSeleniumConfig)
         driver.get("file://${dataFolderPath}/html/${id}.html")
-        val element = driver.findElement(By.cssSelector("body")).size
-        driver.manage().window().size = Dimension(element.width,element.height)
+        val element = driver.findElement(By.className("markdown-body")).size
+        driver.manage().window().size = Dimension(this.width?:element.width,element.height)
 
         Shutterbug.shootPage(driver, Capture.FULL, true).withName(id).save("${dataFolderPath}/image")
         driver.quit()
@@ -81,10 +87,7 @@ class DrawMarkdown {
     fun markdown2Image(markdownInput:InputStream):InputStream{
         val id = timestamp()
         val entity = MarkDown2HtmlWrapper.ofStream(markdownInput)
-        if(this.customCss.isBlank())
-            entity.css = MarkdownStyle().getCss(this.fontsize,this.isLight)
-        else
-            entity.css = this.customCss
+        entity.css = this.customCss?:MarkdownStyle().getCss(this.fontsize,this.isLight)
         val fos = FileOutputStream("${dataFolderPath}/html/${id}.html", false)
 
         fos.write(entity.toString().toByteArray())
@@ -92,8 +95,9 @@ class DrawMarkdown {
 
         val driver = MiraiSeleniumPlugin.driver(config = MiraiSeleniumConfig)
         driver.get("file://${dataFolderPath}/html/${id}.html")
-        val element = driver.findElement(By.cssSelector("body")).size
-        driver.manage().window().size = Dimension(element.width,element.height)
+        val element = driver.findElement(By.className("markdown-body")).size
+        driver.manage().window().size = Dimension(this.width?:element.width,element.height)
+        println(driver.manage().window().size)
 
         Shutterbug.shootPage(driver, Capture.FULL, true).withName(id).save("${dataFolderPath}/image")
         driver.quit()

@@ -1,20 +1,11 @@
 package org.echoosx.mirai.plugin
 
-
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-import net.mamoe.mirai.contact.Contact.Companion.sendImage
-import net.mamoe.mirai.event.GlobalEventChannel
-import net.mamoe.mirai.event.subscribeMessages
 import net.mamoe.mirai.utils.info
 import net.mamoe.mirai.utils.warning
-import org.echoosx.mirai.plugin.utils.DrawMarkdown
 import org.echoosx.mirai.plugin.utils.touchDir
 import xyz.cssxsh.mirai.selenium.MiraiSeleniumPlugin
-import java.io.FileInputStream
-
 
 object MarkdownToImage : KotlinPlugin(
     JvmPluginDescription(
@@ -26,7 +17,7 @@ object MarkdownToImage : KotlinPlugin(
         dependsOn("xyz.cssxsh.mirai.plugin.mirai-selenium-plugin", true)
     }
 ) {
-    val selenium: Boolean by lazy {
+    private val selenium: Boolean by lazy {
         try {
             MiraiSeleniumPlugin.setup()
         } catch (exception: NoClassDefFoundError) {
@@ -41,29 +32,6 @@ object MarkdownToImage : KotlinPlugin(
 
         touchDir("${dataFolderPath}/html")
         touchDir("${dataFolderPath}/image")
-        if(selenium){
-            MiraiSeleniumConfig.reload()
-
-            val eventChannel = GlobalEventChannel.parentScope(this)
-            eventChannel.subscribeMessages {
-                startsWith("md"){ str->
-                    try {
-                        val drawer = DrawMarkdown()
-                        drawer.setLight(false)
-                        drawer.setFontsize(25)
-//                    val resource = drawer.markdown2Image(FileInputStream("${dataFolderPath}/help.md"))
-                        val resource = drawer.markdown2Image(str)
-                        subject.sendImage(resource)
-                        withContext(Dispatchers.IO) {
-                            resource.close()
-                        }
-
-                    }catch (e:Throwable){
-                        subject.sendMessage("生成失败")
-                        logger.error(e)
-                    }
-                }
-            }
-        }
+        if(selenium) { MiraiSeleniumConfig.reload() }
     }
 }

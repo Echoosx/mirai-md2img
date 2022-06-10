@@ -8,25 +8,17 @@ import xyz.cssxsh.selenium.RemoteWebDriverConfig
 import xyz.cssxsh.selenium.UserAgents
 
 object MiraiSeleniumConfig:AutoSavePluginConfig("SeleniumConfig"),RemoteWebDriverConfig {
-    @ValueName("expires")
-    @ValueDescription("驱动文件过期时间，默认一星期 (单位：天)")
-    public val expires: Int by value(7)
-
-    @ValueName("destroy")
-    @ValueDescription("清理浏览器驱动，默认30 (单位：分钟)")
-    public val destroy: Int by value(30)
-
-    @ValueName("user_agent")
+   @ValueName("user_agent")
     @ValueDescription("截图UA")
     override val userAgent: String by value(UserAgents.IPAD)
 
     @ValueName("width")
     @ValueDescription("截图宽度")
-    override var width: Int by value(768)
+    override val width: Int by value(1920)
 
     @ValueName("height")
     @ValueDescription("截图高度")
-    override var height: Int by value(1024)
+    override val height: Int by value(1080)
 
     @ValueName("headless")
     @ValueDescription("无头模式（后台模式）")
@@ -55,6 +47,4 @@ object MiraiSeleniumConfig:AutoSavePluginConfig("SeleniumConfig"),RemoteWebDrive
     @ValueName("arguments")
     @ValueDescription("自定义 arguments")
     override val arguments: List<String> by value()
-
-    internal class Service : RemoteWebDriverConfig by MiraiSeleniumConfig
 }

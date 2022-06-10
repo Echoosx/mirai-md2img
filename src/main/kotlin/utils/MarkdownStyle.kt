@@ -15,7 +15,7 @@ class MarkdownStyle{
               <style type="text/css">
                 body{
                     margin:0;
-                    width:max-content;
+                    background:#ffffff;
                 }
                 .margin-tb-zero,
                 .markdown-body ol ol,
@@ -30,6 +30,7 @@ class MarkdownStyle{
                   margin-bottom: 0;
                 }
                 .markdown-body {
+                  width:fit-content;
                   font-family: "Consolas", "SansSource Han Sans CN", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                   font-size: ${fontsize}px;
                   color: #24292f;
@@ -208,8 +209,8 @@ class MarkdownStyle{
                   max-height: 100%;
                   -webkit-border-radius: 4px;
                   border-radius: 4px;
-                  -webkit-box-shadow: 0 0 10px #555;
-                  box-shadow: 0 0 10px #555;
+                  /*-webkit-box-shadow: 0 0 10px #555;*/
+                  /*box-shadow: 0 0 10px #555;*/
                 }
                 .markdown-body strong {
                   font-weight: bold;
@@ -259,7 +260,7 @@ class MarkdownStyle{
               <style type="text/css">
                 body{
                     margin:0;
-                    width:max-content;
+                    background:#282c34;
                 }
                 .margin-tb-zero,
                 .markdown-body ol ol,
@@ -274,6 +275,7 @@ class MarkdownStyle{
                   margin-bottom: 0;
                 }
                 .markdown-body {
+                  width:fit-content;
                   font-family: "Consolas", "SansSource Han Sans CN", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                   font-size: ${fontsize}px;
                   color: #abb2bf;
@@ -452,8 +454,8 @@ class MarkdownStyle{
                   max-height: 100%;
                   -webkit-border-radius: 4px;
                   border-radius: 4px;
-                  -webkit-box-shadow: 0 0 10px #555;
-                  box-shadow: 0 0 10px #555;
+                  /*-webkit-box-shadow: 0 0 10px #555;*/
+                  /*box-shadow: 0 0 10px #555;*/
                 }
                 .markdown-body strong {
                   font-weight: bold;
